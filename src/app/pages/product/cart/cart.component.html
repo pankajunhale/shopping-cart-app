@@ -1,0 +1,48 @@
+<p>cart works!</p>
+<div class="bg-white">
+  <div
+    class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8"
+  >
+    <h1 class="text-3xl">Shopping Cart</h1>
+    <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
+    @for (item of cartModel.result; track item; let index = $index) {
+
+    <!-- Grid wrapper -->
+    <div class="grid grid-cols-3">
+      <!-- Columns -->
+      <div class="bg-red-300">
+        <img
+          src="https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg"
+          alt="Tall slender porcelain bottle with natural clay textured body and cork stopper."
+        />
+      </div>
+      <div class="ml-10">
+        <h1 class="text-3xl">Product Name</h1>
+        <p class="mt-4 text-gray-700">
+          This is a brief description of the product. It includes key features
+          and benefits to entice potential buyers.
+        </p>
+        <div class="mt-6">
+          Price:
+          <span class="text-xl font-medium text-gray-900"> 100.00 </span>
+        </div>
+        <div class="mt-6">
+          Qunatity:
+          <span class="text-xl font-medium text-gray-900"> 1 </span>
+        </div>
+        <div class="mt-32 flex">
+          <button
+            class="flex-1 bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-500"
+          >
+            Remove Product
+          </button>
+        </div>
+      </div>
+      <div class="ml-10 text-right">
+        <div class="text-3xl font-extrabold">5000</div>
+      </div>
+    </div>
+    <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
+    }
+  </div>
+</div>

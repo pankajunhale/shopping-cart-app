@@ -5,22 +5,40 @@
     <div
       class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8"
     >
-      @for (item of products; track item; let index = $index) {
-      <a href="/product-details/{{ item.id }}" class="group">
-        <div
-          class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7"
-        >
-          <img
-            src="https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg"
-            alt="Tall slender porcelain bottle with natural clay textured body and cork stopper."
-            class="h-full w-full object-cover object-center group-hover:opacity-75"
-          />
-        </div>
-        <h3 class="mt-4 text-sm text-gray-700">{{ item.title }}</h3>
-        <p class="mt-1 text-lg font-medium text-gray-900">
-          {{ item.price | currency : "INR" }}
+      @for (item of productModel.result; track item; let index = $index) {
+      <div
+        (click)="viewProductDetails(item.id)"
+        class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7"
+      >
+        <img
+          src="https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg"
+          alt="Tall slender porcelain bottle with natural clay textured body and cork stopper."
+          class="h-full w-full object-cover object-center group-hover:opacity-75"
+        />
+      </div>
+      <div class="lg:w-fit p-0">
+        <h2 class="text-2xl font-bold text-gray-900">
+          {{ item.title }}
+        </h2>
+        <p class="mt-4 text-gray-700">
+          This is a brief description of the product. It includes key features
+          and benefits to entice potential buyers.
         </p>
-      </a>
+
+        <div class="mt-6">
+          <span class="text-3xl font-bold text-gray-900">
+            {{ item.price | currency : "INR" }}
+          </span>
+        </div>
+
+        <div class="mt-32 flex">
+          <button
+            class="flex-1 bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700"
+          >
+            Add to Cart
+          </button>
+        </div>
+      </div>
       }
     </div>
   </div>
