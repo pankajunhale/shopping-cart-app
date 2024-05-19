@@ -56,11 +56,20 @@ export class CartListResponseDto extends ResponseDto {
     @Type(() => Array<Cart>)
     result: Array<Cart> | [] = [];
 
+    @Expose()
+    cartTotal: number;
+
+    @Expose()
+    itemCount: number;
+
     constructor() {
         super();
+        this.cartTotal = 0.00;
+        this.itemCount = 0;
     }
 }
 export class Cart {
+
     @Expose()
     id: number;
 
@@ -68,12 +77,24 @@ export class Cart {
     productId: number;
 
     @Expose()
+    shoppingCartId: number;
+
+    @Expose()
     quantity: number;
+
+    @Expose()
+    itemTotal: number;
+
+    @Type(() => Product)
+    @Expose() product: Product | null;
 
     constructor() {
         this.id = 0;
+        this.shoppingCartId = 0;
         this.productId = 0;
         this.quantity = 0;
+        this.product = null;
+        this.itemTotal = 0;
     }
 }
 

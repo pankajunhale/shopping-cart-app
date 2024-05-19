@@ -1,17 +1,20 @@
 import { Component } from '@angular/core';
-import { CartListResponseDto } from '../dto';
+import { Cart, CartListResponseDto } from '../dto';
 import { CartService } from '../services/cart.service'
+import { EmptyCartComponent } from './empty-cart/empty-cart.component';
+import { CurrencyPipe, JsonPipe } from '@angular/common';
+import { CartTotalComponent } from './cart-total/cart-total.component';
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [],
+  imports: [EmptyCartComponent, CartTotalComponent, JsonPipe, CurrencyPipe],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css'
 })
 export class CartComponent {
 
   cartModel: CartListResponseDto;
-  constructor(private readonly CartService: CartService) {
+  constructor(private readonly cartService: CartService) {
     this.cartModel = new CartListResponseDto();
     this.init();
   }
@@ -21,13 +24,25 @@ export class CartComponent {
   }
 
   private bindCart(): void {
-    this.CartService.getAll(1).subscribe({
+    this.cartService.getAll(1).subscribe({
       next: (res: CartListResponseDto) => {
-        console.table(res);
         this.cartModel = res;
       },
       error: (err) => {
       }
     })
   }
+
+  // public methods
+
+  public removeProduct(item: Cart) {
+    this.cartService.removeProductFromCart(item.id, item.shoppingCartId).subscribe(
+      {
+        next: (res: boolean) => {
+          this.bindCart();
+        },
+      }
+    )
+  }
+
 }
