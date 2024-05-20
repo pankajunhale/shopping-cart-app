@@ -3,6 +3,7 @@ import { ProductListFilterRequestDto, ProductListResponseDto } from '../dto';
 import { CurrencyPipe } from '@angular/common';
 import { ProductService } from '../services/product.service';
 import { Router } from '@angular/router';
+import { CartItemCountService } from '../../../common/services/cart-item-count/cart-item-count.service';
 
 @Component({
   selector: 'app-product-list',
@@ -15,7 +16,8 @@ export class ProductListComponent {
   productModel: ProductListResponseDto;
   constructor(
     private readonly productService: ProductService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly cartItemCountService: CartItemCountService
   ) {
     this.productModel = new ProductListResponseDto();
     this.init();
@@ -38,5 +40,10 @@ export class ProductListComponent {
 
   public viewProductDetails(id: number): void {
     this.router.navigateByUrl(`/product-details/${id}`);
+  }
+
+  public addProductToCart() {
+    const currentValue = this.cartItemCountService.getCount();
+    this.cartItemCountService.setCount(currentValue + 1);
   }
 }

@@ -6,6 +6,7 @@ import { Observable, catchError, map } from 'rxjs';
 import { plainToInstance } from 'class-transformer';
 import { API_URL } from '../../../common/constants';
 import { ResponseDto } from '../../../common/dto/response';
+import { CartItemCountService } from '../../../common/services/cart-item-count/cart-item-count.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,10 @@ import { ResponseDto } from '../../../common/dto/response';
 export class CartService {
 
   private baseServiceUrl: string;
-  constructor(private readonly httpService: HttpClient) {
+  constructor(
+    private readonly httpService: HttpClient,
+    private cartItemCountService: CartItemCountService
+  ) {
     this.baseServiceUrl = environment.API_BASE_URL;
   }
 
@@ -39,6 +43,7 @@ export class CartService {
   }
 
   addProductToCart(product: Product) {
+    this.cartItemCountService.setCount(11);
     return this.httpService.post(`${this.baseServiceUrl}/${API_URL.CART_INFO}`, product).pipe((
       map((data) => {
         const response = plainToInstance(CartListResponseDto, data);
