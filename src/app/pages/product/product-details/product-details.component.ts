@@ -3,6 +3,7 @@ import { ProductDetailsResponseDto } from '../dto';
 import { ProductService } from '../services/product.service';
 import { CurrencyPipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { CartService } from '../services/cart.service';
 
 @Component({
   selector: 'app-product-details',
@@ -18,13 +19,15 @@ export class ProductDetailsComponent {
 
   constructor(
     private router: ActivatedRoute,
-    private readonly productService: ProductService
+    private readonly productService: ProductService,
+    private readonly cartService: CartService
   ) {
     this.productModel = new ProductDetailsResponseDto();
     this.init();
   }
 
   private init(): void {
+    this.cartService.publishCartSubtotalAndItemCount().subscribe();
     this.router.params.subscribe((param: any) => {
       this.productId = param.id;
       this.bindProductInfo(this.productId);
@@ -43,6 +46,11 @@ export class ProductDetailsComponent {
   }
 
   public addProductToCart(): void {
-
+    debugger;
+    this.cartService.addProductToCart({ productId: this.productModel.result?.id ? this.productModel.result?.id : 0 }).subscribe({
+      next: () => {
+        this.cartService.publishCartSubtotalAndItemCount().subscribe();
+      }
+    })
   }
 }

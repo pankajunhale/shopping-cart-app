@@ -4,5 +4,6 @@ export const USER_AUTHORIZATION_HEADER = "Authorization";
 export const API_URL = {
     LOGIN: "auth/sign-in",
     PRODUCT_LIST: "products",
-    CART_INFO: "carts"
+    CART_INFO: "cart",
+    CART_SUBTOTAL_AND_COUNT_INFO: "cart/info"
 }

@@ -98,3 +98,83 @@ export class Cart {
     }
 }
 
+export class AddCartItemRequestDto {
+    @Expose()
+    id?: number;
+
+    @Expose()
+    productId: number;
+
+    @Expose()
+    quantity?: number;
+
+    constructor() {
+        this.id = 0;
+        this.productId = 0;
+        this.quantity = 0;
+    }
+}
+
+export class AddCartItemReponseDto extends ResponseDto {
+
+    @Expose()
+    @Type(() => AddCartItemResponse)
+    result: AddCartItemResponse | null = null;
+
+    constructor() {
+        super();
+
+    }
+}
+
+export class AddCartItemResponse {
+    @Expose()
+    id: number;
+
+    @Expose()
+    productId: number;
+
+    @Expose()
+    quantity: number;
+
+    @Expose()
+    shoppingCartId: number;
+
+    @Expose()
+    totalCartItemCount: number;
+
+    constructor() {
+        this.id = 0;
+        this.productId = 0;
+        this.quantity = 0;
+        this.shoppingCartId = 0;
+        this.totalCartItemCount = 0;
+    }
+}
+
+
+export class CartSubtotalAndItemCountResponseDto extends ResponseDto {
+
+    @Expose()
+    @Type(() => CartSubtotalAndItemCountResponse)
+    result: CartSubtotalAndItemCountResponse | null = null;
+
+    constructor() {
+        super();
+    }
+}
+export class CartSubtotalAndItemCountResponse {
+    @Expose()
+    total: number;
+
+    @Expose()
+    count: number;
+
+    constructor() {
+        this.total = 0;
+        this.count = 0;
+    }
+}
+
+
+

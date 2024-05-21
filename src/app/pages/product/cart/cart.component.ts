@@ -23,14 +23,21 @@ export class CartComponent {
     this.bindCart();
   }
 
-  private bindCart(): void {
-    this.cartService.getAll(1).subscribe({
-      next: (res: CartListResponseDto) => {
-        this.cartModel = res;
-      },
-      error: (err) => {
-      }
-    })
+  private async bindCart() {
+    try {
+      this.cartService.publishCartSubtotalAndItemCount().subscribe();
+      this.cartService.getAll().subscribe({
+        next: (res: CartListResponseDto) => {
+          this.cartModel = res;
+        },
+        error: (err) => {
+          //debugger;
+        }
+      })
+    } catch (error) {
+      debugger
+    }
+
   }
 
   // public methods

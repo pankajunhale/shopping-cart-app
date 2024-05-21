@@ -65,7 +65,8 @@
           <div class="flex space-x-4">
             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
             <a
-              href="/product-list"
+              (click)="navigateToPage('product-list')"
+              href="javascript:void(0);"
               class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
               aria-current="page"
               >Products</a
@@ -87,7 +88,8 @@
         class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
       >
         <div
-          class="h-fit pl-3 pr-4 mr-4 bg-gray-100 flex justify-center items-center"
+          (click)="navigateToPage('my-cart')"
+          class="cursor-pointer h-fit pl-3 pr-4 mr-4 bg-gray-100 flex justify-center items-center"
         >
           <div class="relative py-2">
             <div class="t-0 absolute left-3">

@@ -1,28 +1,29 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { CartListResponseDto, Product } from '../dto';
+import { AddCartItemReponseDto, AddCartItemRequestDto, CartListResponseDto, CartSubtotalAndItemCountResponseDto, Product } from '../dto';
 import { Observable, catchError, map } from 'rxjs';
 import { plainToInstance } from 'class-transformer';
 import { API_URL } from '../../../common/constants';
-import { ResponseDto } from '../../../common/dto/response';
 import { CartItemCountService } from '../../../common/services/cart-item-count/cart-item-count.service';
+import { BaseService } from './base.service';
+import { CartSubtotalSignalService } from '../../../common/services/cart-subtotal-signal/cart-subtotal-signal.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CartService {
+export class CartService extends BaseService {
 
-  private baseServiceUrl: string;
   constructor(
     private readonly httpService: HttpClient,
-    private cartItemCountService: CartItemCountService
+    private cartItemCountService: CartItemCountService,
+    private cartSubtotalSignalService: CartSubtotalSignalService
   ) {
-    this.baseServiceUrl = environment.API_BASE_URL;
+    super();
   }
 
-  getAll(userId: number): Observable<CartListResponseDto> {
-    return this.httpService.get(`${this.baseServiceUrl}/${API_URL.CART_INFO}/1`).pipe((
+  getAll(): Observable<CartListResponseDto> {
+    return this.httpService.get(`${this.baseServiceUrl}/${API_URL.CART_INFO}`).pipe((
       map((data: any) => {
         if (data && data.result && data.result.length > 0) {
           let subTotal = 0;
@@ -42,11 +43,10 @@ export class CartService {
     ))
   }
 
-  addProductToCart(product: Product) {
-    this.cartItemCountService.setCount(11);
-    return this.httpService.post(`${this.baseServiceUrl}/${API_URL.CART_INFO}`, product).pipe((
+  addProductToCart(cartItem: AddCartItemRequestDto): Observable<AddCartItemReponseDto> {
+    return this.httpService.post(`${this.baseServiceUrl}/${API_URL.CART_INFO}`, cartItem).pipe((
       map((data) => {
-        const response = plainToInstance(CartListResponseDto, data);
+        const response = plainToInstance(AddCartItemReponseDto, data);
         return response;
       })
     ))
@@ -56,6 +56,18 @@ export class CartService {
     return this.httpService.delete(`${this.baseServiceUrl}/${API_URL.CART_INFO}/${id}/${shoppingCartId}`).pipe((
       map((data) => {
         return true;
+      })
+    ))
+  }
+
+  publishCartSubtotalAndItemCount(): Observable<CartSubtotalAndItemCountResponseDto> {
+    return this.httpService.get(`${this.baseServiceUrl}/${API_URL.CART_SUBTOTAL_AND_COUNT_INFO}`).pipe((
+      map((response) => {
+        console.log(response);
+        const data = plainToInstance(CartSubtotalAndItemCountResponseDto, response);
+        this.cartItemCountService.setCount(data.result?.count ? data.result?.count : 0);
+        this.cartSubtotalSignalService.set(data.result?.total ? data.result?.total : 0);
+        return data;
       })
     ))
   }
