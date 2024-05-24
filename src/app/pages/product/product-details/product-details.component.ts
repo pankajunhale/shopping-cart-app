@@ -40,13 +40,12 @@ export class ProductDetailsComponent {
         this.productModel = res;
       },
       error: (err) => {
-        //debugger;
+        //handle/display error;
       }
     })
   }
 
   public addProductToCart(): void {
-    debugger;
     this.cartService.addProductToCart({ productId: this.productModel.result?.id ? this.productModel.result?.id : 0 }).subscribe({
       next: () => {
         this.cartService.publishCartSubtotalAndItemCount().subscribe();

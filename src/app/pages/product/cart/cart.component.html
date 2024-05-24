@@ -12,7 +12,7 @@
     <!-- Grid wrapper -->
     <div class="grid grid-cols-3">
       <!-- Columns -->
-      <div class="bg-red-300">
+      <div class="bg-red-300 h-fit">
         <img
           src="https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg"
           alt="Tall slender porcelain bottle with natural clay textured body and cork stopper."
@@ -36,7 +36,7 @@
             {{ item.quantity }}
           </span>
         </div>
-        <div class="mt-32 flex">
+        <div class="lg:mt-32 sm:mt-8 flex">
           <button
             (click)="removeProduct(item)"
             class="flex-1 bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-500"

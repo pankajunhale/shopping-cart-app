@@ -20,7 +20,6 @@ export class HeaderComponent {
   }
 
   public toggleDropdown(value: boolean) {
-    console.log({ n: new Date() });
     this.isDisplayDropdown = value ? false : true;
   }
 

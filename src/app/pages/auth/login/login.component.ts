@@ -46,8 +46,8 @@ export class LoginComponent implements OnInit {
 
   private constructForm() {
     this.loginForm = this.formBuilder.group({
-      email: ['pankajunhale@gmail.com', [Validators.required, Validators.email]],
-      password: ['test1234', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]],
     })
   }
 
@@ -83,7 +83,6 @@ export class LoginComponent implements OnInit {
       return;
     }
     const { email, password } = this.loginForm.value;
-    console.log(JSON.stringify(this.loginForm.value, null, 2));
     this.handleLogin({ email, password });
   }
 }

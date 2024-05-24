@@ -25,13 +25,13 @@ export class CartComponent {
 
   private async bindCart() {
     try {
-      this.cartService.publishCartSubtotalAndItemCount().subscribe();
       this.cartService.getAll().subscribe({
         next: (res: CartListResponseDto) => {
           this.cartModel = res;
+          this.cartService.publishCartSubtotalAndItemCount().subscribe();
         },
         error: (err) => {
-          //debugger;
+          //handle/display error;
         }
       })
     } catch (error) {

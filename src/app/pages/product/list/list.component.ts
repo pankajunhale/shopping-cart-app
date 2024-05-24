@@ -33,10 +33,10 @@ export class ProductListComponent {
   private bindAllProducts(): void {
     this.productService.getAllProducts(new ProductListFilterRequestDto()).subscribe({
       next: (res: ProductListResponseDto) => {
-        console.table(res);
         this.productModel = res;
       },
       error: (err) => {
+        // handle/display error
       }
     })
   }
@@ -53,11 +53,11 @@ export class ProductListComponent {
     ).subscribe(
       {
         next: (res: AddCartItemReponseDto) => {
-          console.table(res);
           // update cart item count
           this.cartItemCountService.setCount(res.result ? res.result.totalCartItemCount : 0);
         },
         error: (err) => {
+          // handle/display error
         }
       }
     );

@@ -7,7 +7,6 @@ import { catchError, throwError } from 'rxjs';
 
 export const authenticationInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next:
   HttpHandlerFn) => {
-  console.log(req);
   const id = inject(PLATFORM_ID);
   const userToken = isPlatformBrowser(id) ? window['localStorage'].getItem(USER_ACCESS_TOKEN_KEY) : undefined;
   if (userToken) {

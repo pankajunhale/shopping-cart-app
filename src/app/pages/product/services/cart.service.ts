@@ -37,7 +37,6 @@ export class CartService extends BaseService {
           data['itemCount'] = itemCount;
         }
         const response = plainToInstance(CartListResponseDto, data);
-        console.dir(response);
         return response;
       })
     ))
@@ -54,7 +53,7 @@ export class CartService extends BaseService {
 
   removeProductFromCart(id: number, shoppingCartId: number): Observable<boolean> {
     return this.httpService.delete(`${this.baseServiceUrl}/${API_URL.CART_INFO}/${id}/${shoppingCartId}`).pipe((
-      map((data) => {
+      map(() => {
         return true;
       })
     ))
@@ -63,7 +62,6 @@ export class CartService extends BaseService {
   publishCartSubtotalAndItemCount(): Observable<CartSubtotalAndItemCountResponseDto> {
     return this.httpService.get(`${this.baseServiceUrl}/${API_URL.CART_SUBTOTAL_AND_COUNT_INFO}`).pipe((
       map((response) => {
-        console.log(response);
         const data = plainToInstance(CartSubtotalAndItemCountResponseDto, response);
         this.cartItemCountService.setCount(data.result?.count ? data.result?.count : 0);
         this.cartSubtotalSignalService.set(data.result?.total ? data.result?.total : 0);
